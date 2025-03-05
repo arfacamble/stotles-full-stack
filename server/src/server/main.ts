@@ -1,4 +1,5 @@
 import express, { request } from "express";
+import type { Request } from "express";
 
 import { Sequelize } from "sequelize-typescript";
 import {
@@ -42,6 +43,7 @@ app.use(express.json());
 
 type RecordSearchFilters = {
   textSearch?: string;
+  buyerId?: string;
 };
 
 /**
@@ -143,10 +145,9 @@ async function serializeProcurementRecords(
  * This endpoint implements basic way to paginate through the search results.
  * It returns a `endOfResults` flag which is true when there are no more records to fetch.
  */
-app.post("/api/records", async (req, res) => {
-  const requestPayload = req.body as RecordSearchRequest;
-
-  const { limit, offset } = requestPayload;
+app.get("/api/records", async (req, res) => {
+  const offset: number = parseInt(req.query.offset as string)
+  const limit: number = parseInt(req.query.limit as string)
 
   if (limit === 0 || limit > 100) {
     res.status(400).json({ error: "Limit must be between 1 and 100." });
@@ -159,7 +160,8 @@ app.post("/api/records", async (req, res) => {
   // and the client can fetch the next page.
   const records = await searchRecords(
     {
-      textSearch: requestPayload.textSearch,
+      textSearch: req.query.textSearch as string,
+      buyerId: req.query.buyerId as string,
     },
     offset,
     limit + 1

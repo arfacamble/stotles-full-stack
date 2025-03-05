@@ -1,8 +1,14 @@
 export type SearchRecordsRequest = {
   textSearch?: string;
+  buyerId?: string;
   limit: number;
   offset: number;
 };
+
+export type Buyer = {
+  id: string;
+  name: string;
+}
 
 export type ProcurementRecord = {
   id: string;
@@ -14,10 +20,7 @@ export type ProcurementRecord = {
   stage: "TENDER" | "CONTRACT";
   close_date: string | null;
   award_date: string | null;
-  buyer: {
-    id: string;
-    name: string;
-  };
+  buyer: Buyer;
 };
 
 export type SearchRecordsResponse = {
@@ -29,13 +32,8 @@ class Api {
   async searchRecords(
     request: SearchRecordsRequest
   ): Promise<SearchRecordsResponse> {
-    const response = await fetch("/api/records", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(request),
-    });
+    const queryString = Object.entries(request).map(([key, value]) => value !== "" && `${key}=${value}`).filter(x => x).join("&")
+    const response = await fetch(`/api/records?${queryString}`);
     return await response.json();
   }
 }

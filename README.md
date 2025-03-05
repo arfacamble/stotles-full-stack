@@ -64,3 +64,28 @@ Caveat, this solution would not allow per day value (but that could be implement
 so I will assume for now that that is enforced robustly.
 - both the above, but particularly the value column text, should be pulled out into a helper class and unit tested. If I was doing this for real in production that is an example
 where I would use TDD process.
+
+### To Do
+
+- deal with node vulnerabilities
+- deal with console error, unique key for each element in list
+- change post to a get
+- is there a neater way to know whether to show the show more button?
+- what ORM to use for this framework?
+- organisation
+  - models directory
+  - components in directories
+- consider column widths and wrapping
+- consider refactor to pull cell content computation in private or helper method
+- do joins properly rather than getting all buyers and computing in memory
+
+
+steps for main task
+- get ant design type ahead drop down
+  - style as flexbox/inline
+  - put in handleBuyerChange (account for undefined, ie reset)
+- make api endpoint to return all buyers
+- call and populate drop down
+- do filtering independent of search
+- ensure that search still works independently after
+- does this mess with the pagination?
