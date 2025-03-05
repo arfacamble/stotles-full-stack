@@ -39,6 +39,32 @@ function RecordsTable(props: Props) {
         title: "Buyer name",
         render: (record: ProcurementRecord) => record.buyer.name,
       },
+      {
+        title: "Value",
+        render: (record: ProcurementRecord) => {
+          if (!record.value) { return null }
+
+          if (!record.currency) { return record.value }
+
+          try {
+            return record.value.toLocaleString('en-UK', { style: 'currency', currency: record.currency, minimumFractionDigits: 0 })
+          } catch (error) {
+            // log error -> consider restricting strings saved to currency column to ISO 4217 currency codes
+            return `${record.value} ${record.currency}`
+          }
+
+        }
+      },
+      {
+        title: "Stage",
+        render: (record: ProcurementRecord) => {
+          if (record.stage === 'CONTRACT') {
+            return `Awarded on ${ record.award_date }`
+          } else {
+            return `Open until ${ record.close_date }`
+          }
+        }
+      }
     ];
   }, []);
   return (

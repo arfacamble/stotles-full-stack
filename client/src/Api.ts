@@ -9,6 +9,11 @@ export type ProcurementRecord = {
   title: string;
   description: string;
   publishDate: string;
+  value: number | null;
+  currency: string | null;
+  stage: "TENDER" | "CONTRACT";
+  close_date: string | null;
+  award_date: string | null;
   buyer: {
     id: string;
     name: string;

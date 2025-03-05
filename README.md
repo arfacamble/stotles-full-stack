@@ -53,3 +53,14 @@ If for any reason the database becomes unusable, you can rebuild it using `./res
 ## The task
 
 All the instructions are available [here](https://www.notion.so/stotles/Full-stack-software-engineer-work-sample-assignment-ae7c64e08f2a42a097d16cee4bc661fc).
+
+## Notes
+
+Warm up 3:
+- value : question would go to design, how exactly do you want this presented.
+If eg £450,000 further discussion about restricting values in currency column to ISO values.
+Caveat, this solution would not allow per day value (but that could be implemented with eg an extra flag) and would generally restrict data source freedom of free text.
+- stage : If there is no relevant date this will display eg "Open until " which will look odd. There are currently no tenders with null close date or contracts with null award date
+so I will assume for now that that is enforced robustly.
+- both the above, but particularly the value column text, should be pulled out into a helper class and unit tested. If I was doing this for real in production that is an example
+where I would use TDD process.
